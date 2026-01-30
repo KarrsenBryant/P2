@@ -13,7 +13,6 @@ import pytest
 from retrieval.embeddings import DocumentEmbedder
 from retrieval.store import VectorStore
 
-
 # import our DocumentEmbedder and VectorStore
 
 

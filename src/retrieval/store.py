@@ -7,6 +7,7 @@ Seattle University, ARIN 5360
 =190380
 @version: 1.0.0+w26
 """
+
 import chromadb
 from chromadb import Settings
 from chromadb.api.types import EmbeddingFunction
@@ -24,7 +25,6 @@ class EmbedderAdaptor(EmbeddingFunction):
     def is_legacy(self) -> bool:
         """Return True since we don't support build from config, etc."""
         return True
-
 
     def __call__(self, input) -> list[list[float]]:
         """
