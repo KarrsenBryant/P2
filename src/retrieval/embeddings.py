@@ -12,7 +12,6 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 
 
-
 class DocumentEmbedder:
     """
     Object for embedding documents.
@@ -30,8 +29,8 @@ class DocumentEmbedder:
     def embed_query(self, queries: str | list[str]) -> np.ndarray:
         """Generate embedding for a single query."""
         if isinstance(queries, str):
-             queries = [queries]
-             results = self.embed_documents(queries)
-             return results[0]
+            queries = [queries]
+            results = self.embed_documents(queries)
+            return results[0]
         else:
-             return self.embed_documents(queries)
+            return self.embed_documents(queries)

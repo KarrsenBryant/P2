@@ -60,8 +60,7 @@ def test_embed_query_with_list_input(embedder):
     embedding = embedder.embed_query(["query1", "query2"])
 
     assert isinstance(embedding, np.ndarray)
-    assert embedding.shape == (2,384)
-
+    assert embedding.shape == (2, 384)
 
 
 def test_similar_texts_have_similar_embeddings(embedder):
@@ -92,4 +91,3 @@ def test_custom_model_name():
     embedder = DocumentEmbedder(model_name="all-MiniLM-L6-v2")
 
     assert embedder.model_name == "all-MiniLM-L6-v2"
-
