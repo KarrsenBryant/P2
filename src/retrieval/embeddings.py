@@ -1,7 +1,7 @@
 """
 Embedding functions for document retrieval.
 
-@author: FIXME: your name here
+@author: Sarah Ruhl and Karrsen Bryant
 Seattle University, ARIN 5360
 @see: https://catalog.seattleu.edu/preview_course_nopop.php?catoid=55&coid
 =190380
@@ -9,20 +9,19 @@ Seattle University, ARIN 5360
 """
 
 import numpy as np
+from sentence_transformers import SentenceTransformer
 
-# FIXME: imports
 
 
 class DocumentEmbedder:
     """
-    FIXME: docstring
+    Object for embedding documents.
     """
 
     def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
         """Initialize embedder with the specified model."""
         self.model_name = model_name
-        # FIXME: use SentenceTransformer model
-        # self.model = SentenceTransformer(model_name)
+        self.model = SentenceTransformer(model_name)
 
     def embed_documents(self, texts: list[str]) -> np.ndarray:
         """Generate embeddings for multiple documents."""
@@ -30,10 +29,9 @@ class DocumentEmbedder:
 
     def embed_query(self, queries: str | list[str]) -> np.ndarray:
         """Generate embedding for a single query."""
-        # FIXME: handle single textual query or a list of queries
-        # if isinstance(queries, str):
-        #     queries = [queries]
-        #     results = self.embed_documents(queries)
-        #     return results[0]
-        # else:
-        #     return self.embed_documents(queries)
+        if isinstance(queries, str):
+             queries = [queries]
+             results = self.embed_documents(queries)
+             return results[0]
+        else:
+             return self.embed_documents(queries)

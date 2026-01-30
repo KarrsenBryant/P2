@@ -9,7 +9,7 @@ Seattle University, ARIN 5360
 
 import pytest
 
-from retrieval.loader import DocumentLoader
+from src.retrieval.loader import DocumentLoader
 
 
 def test_loader_loads_documents(tmp_path):
