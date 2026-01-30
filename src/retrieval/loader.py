@@ -11,8 +11,7 @@ import logging
 from pathlib import Path
 
 
-class DocumentLoader():
-
+class DocumentLoader:
     def load_documents(self, directory: str) -> list[dict]:
         documents = []
         path = Path(directory)
@@ -20,17 +19,16 @@ class DocumentLoader():
             raise FileNotFoundError(f"Directory {directory} does not exist")
         for filepath in path.glob("*.txt"):
             try:
-                with open(filepath, 'r', encoding='utf-8') as f:
+                with open(filepath, "r", encoding="utf-8") as f:
                     text = f.read().strip()
                 if text:
-                    documents.append({
-                        'id': filepath.stem,
-                        'text': text,
-                        'metadata': {'filename': filepath.name}
-                    })
+                    documents.append(
+                        {"id": filepath.stem, "text": text, "metadata": {"filename": filepath.name}}
+                    )
             except Exception as e:
                 logging.error(e)
         return documents
+
 
 if __name__ == "__main__":
     print("Run the main.py")

@@ -22,9 +22,10 @@ def test_loader_loads_documents(tmp_path):
     documents = loader.load_documents(str(tmp_path))
     assert len(documents) == 2
 
-    assert all('id' in doc for doc in documents)
-    assert all('text' in doc for doc in documents)
-    assert all('metadata' in doc for doc in documents)
+    assert all("id" in doc for doc in documents)
+    assert all("text" in doc for doc in documents)
+    assert all("metadata" in doc for doc in documents)
+
 
 def test_loader_skips_empty_documents(tmp_path):
     """Test skipping empty documents."""
@@ -36,8 +37,9 @@ def test_loader_skips_empty_documents(tmp_path):
     documents = loader.load_documents(str(tmp_path))
 
     assert len(documents) == 1
-    assert documents[0]['text'] == 'This is test file 1'
-    assert documents[0]['metadata']['filename'] == 'not_empty.txt'
+    assert documents[0]["text"] == "This is test file 1"
+    assert documents[0]["metadata"]["filename"] == "not_empty.txt"
+
 
 def test_loader_skips_nonexistent_directory(tmp_path):
     """Test skipping non-existent directory."""
