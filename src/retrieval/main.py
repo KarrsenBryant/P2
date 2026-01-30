@@ -16,7 +16,7 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 from starlette.staticfiles import StaticFiles
 
-from retrieval.retriever import DocumentRetriever
+from src.retrieval.retriever import DocumentRetriever
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
