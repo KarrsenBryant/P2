@@ -10,8 +10,8 @@ Seattle University, ARIN 5360
 
 import pytest
 
-from retrieval.embeddings import DocumentEmbedder
-from retrieval.store import VectorStore
+from src.retrieval.embeddings import DocumentEmbedder
+from src.retrieval.store import VectorStore
 
 # import our DocumentEmbedder and VectorStore
 

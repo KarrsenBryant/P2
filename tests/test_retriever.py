@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from retrieval.retriever import DocumentRetriever
+from src.retrieval.retriever import DocumentRetriever
 
 
 @pytest.fixture

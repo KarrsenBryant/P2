@@ -8,9 +8,9 @@ Seattle University, ARIN 5360
 @version: 1.0.0+w26
 """
 
-from retrieval.embeddings import DocumentEmbedder
-from retrieval.loader import DocumentLoader
-from retrieval.store import VectorStore
+from src.retrieval.embeddings import DocumentEmbedder
+from src.retrieval.loader import DocumentLoader
+from src.retrieval.store import VectorStore
 
 
 class DocumentRetriever:
