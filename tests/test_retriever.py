@@ -137,6 +137,12 @@ def test_with_chunks(retriever):
     test_dir = Path(__file__).parent
     sample_dir = str(test_dir / "data")
     retriever.index_documents(sample_dir)
+
+    results = retriever.search("What MSAI courses are 5 credits")
+
+    assert len(results) > 0
+    assert "5 credits" in results[0]["text"]
+
     results = retriever.search("Is a crucifix better than garlic as vampire repellent?")
 
     distance_sum = sum(result["distance"] for result in results)

@@ -10,6 +10,8 @@ Seattle University, ARIN 5360
 import logging
 from pathlib import Path
 
+import pypdf
+
 
 class DocumentLoader:
     def __init__(self, chunker=None):
@@ -29,7 +31,44 @@ class DocumentLoader:
 
             except Exception as e:
                 logging.error(e)
+
+        for filepath in path.glob("*.pdf"):
+            logging.info(f"Loading document: {filepath}")
+            docs = self._load_pdf_file(filepath)
+            documents.extend(docs)
+
         return documents
+
+    def _load_pdf_file(self, filepath: Path) -> list[dict]:
+        """Load a single PDF file."""
+        try:
+            reader = pypdf.PdfReader(filepath)
+
+            # Extract text from all pages
+            text_parts = []
+            for page in reader.pages:
+                text_parts.append(page.extract_text())
+
+            text = "\n\n".join(text_parts).strip()
+
+            if not text:
+                return []
+
+            doc_id = filepath.stem
+            metadata = {"filename": filepath.name, "type": "pdf", "num_pages": len(reader.pages)}
+
+            if self.chunker:
+                chunks = self.chunker.chunk_text(text, doc_id)
+                # Add PDF metadata to each chunk
+                for chunk in chunks:
+                    chunk["metadata"].update(metadata)
+                return chunks
+            else:
+                return [{"id": doc_id, "text": text, "metadata": metadata}]
+
+        except Exception as e:
+            print(f"Warning: Failed to load {filepath}: {e}")
+            return []
 
     def _load_text_file(self, filePath: Path):
         try:
