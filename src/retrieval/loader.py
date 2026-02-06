@@ -12,6 +12,10 @@ from pathlib import Path
 
 
 class DocumentLoader:
+    def __init__(self, chunker=None):
+        """Initialize the document loader with optitional chunker"""
+        self.chunker = chunker
+
     def load_documents(self, directory: str) -> list[dict]:
         documents = []
         path = Path(directory)
@@ -19,15 +23,35 @@ class DocumentLoader:
             raise FileNotFoundError(f"Directory {directory} does not exist")
         for filepath in path.glob("*.txt"):
             try:
-                with open(filepath, "r", encoding="utf-8") as f:
-                    text = f.read().strip()
-                if text:
-                    documents.append(
-                        {"id": filepath.stem, "text": text, "metadata": {"filename": filepath.name}}
-                    )
+                logging.info(f"Loading document: {filepath}")
+                docs = self._load_text_file(filepath)
+                documents.extend(docs)
+
             except Exception as e:
                 logging.error(e)
         return documents
+
+    def _load_text_file(self, filePath: Path):
+        try:
+            with open(filePath, "r", encoding="utf-8") as f:
+                text = f.read().strip()
+
+            if not text:
+                return []
+
+            doc_id = filePath.stem
+            metadata = {"filename": filePath.name, "type": "txt"}
+
+            if self.chunker:
+                chunks = self.chunker.chunk_text(text, doc_id)
+                for chunk in chunks:
+                    chunk["metadata"].update(metadata)
+                return chunks
+            else:
+                return [{"id": doc_id, "text": text, "metadata": metadata}]
+
+        except Exception as e:
+            logging.warning(f"Warning: file {filePath} could not be loaded:{e}")
 
 
 class DocumentChunker:
@@ -55,6 +79,7 @@ class DocumentChunker:
 
             while start < len(words):
                 end = start + self.chunk_size
+
                 chunk_text = " ".join(words[start:end])
 
                 chunks.append(

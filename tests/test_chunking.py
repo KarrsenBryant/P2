@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from retrieval.loader import DocumentChunker
+from src.retrieval.loader import DocumentChunker
 
 
 def test_chunker_small_text():
