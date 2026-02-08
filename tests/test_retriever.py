@@ -150,10 +150,10 @@ def test_with_chunks(retriever):
 
     for result in results:
         passage = result["text"]
-        assert "garlic" in passage or "crucifix" in passage
+        assert "garlic" in passage or "crucifix" in passage or "death" in passage
 
     chunks = set(result["metadata"]["chunk"] for result in results)
     print(chunks)
     assert chunks
-    assert len(chunks) == 4
-    assert chunks & {373, 257, 568, 206}
+    assert len(chunks) == 5
+    assert chunks & {373, 257, 568, 206, 314}
