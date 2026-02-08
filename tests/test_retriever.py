@@ -1,7 +1,7 @@
 """
 Simple unit tests for the DocumentRetriever class.
 
-@author: FIXME: your name here
+@author: Sarah Ruhl and Karrsen Bryant
 Seattle University, ARIN 5360
 @see: https://catalog.seattleu.edu/preview_course_nopop.php?catoid=55&coid
 =190380
