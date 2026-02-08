@@ -9,16 +9,17 @@ Seattle University, ARIN 5360
 """
 
 from src.retrieval.embeddings import DocumentEmbedder
-from src.retrieval.loader import DocumentLoader
+from src.retrieval.loader import DocumentChunker, DocumentLoader
 from src.retrieval.store import VectorStore
 
 
 class DocumentRetriever:
     """High-level interface for document retrieval."""
 
-    def __init__(self):
+    def __init__(self, chunk_size: int = 300, overlap: int = 30):
         """Initialize retriever with default components."""
-        self.loader = DocumentLoader()
+        chunker = DocumentChunker(chunk_size=chunk_size, overlap=overlap)
+        self.loader = DocumentLoader(chunker=chunker)
         self.store = VectorStore(DocumentEmbedder())
         self._indexed = False  # flag to indicate we've done some indexing
 

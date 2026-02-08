@@ -1,7 +1,7 @@
 """
 Simple unit tests for the DocumentRetriever class.
 
-@author: FIXME: your name here
+@author: Sarah Ruhl and Karrsen Bryant
 Seattle University, ARIN 5360
 @see: https://catalog.seattleu.edu/preview_course_nopop.php?catoid=55&coid
 =190380
@@ -131,3 +131,29 @@ def test_index_empty_directory(retriever, tmp_path):
     retriever.index_documents(empty_dir)
 
     assert retriever.document_count == 0
+
+
+def test_with_chunks(retriever):
+    test_dir = Path(__file__).parent
+    sample_dir = str(test_dir / "data")
+    retriever.index_documents(sample_dir)
+
+    results = retriever.search("What MSAI courses are 5 credits")
+
+    assert len(results) > 0
+    assert "5 credits" in results[0]["text"]
+
+    results = retriever.search("Is a crucifix better than garlic as vampire repellent?")
+
+    distance_sum = sum(result["distance"] for result in results)
+    assert 0.1 < distance_sum <= 8.0
+
+    for result in results:
+        passage = result["text"]
+        assert "garlic" in passage or "crucifix" in passage or "death" in passage
+
+    chunks = set(result["metadata"]["chunk"] for result in results)
+    print(chunks)
+    assert chunks
+    assert len(chunks) == 5
+    assert chunks & {373, 257, 568, 206, 314}

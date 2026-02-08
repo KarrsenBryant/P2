@@ -1,25 +1,32 @@
-Lab 3: Document Retrieval System
+# Lab 4: Document Retrieval System
 
 Semantic search system using ChromaDB and sentence transformers  
 for **ARIN 5360 at Seattle University**
 
  ---
 
-Setup
+## Setup
 
 ```bash
+git clone https://github.com/KarrsenBryant/P2
 # Install dependencies
 uv sync
+```
 
-Running the Server
+## Running the Server
+```
 uv run uvicorn src.retrieval.main:app --reload
-
+```
 
 Server starts at:
 http://localhost:8000
 
-Usage
+---
+
+## Usage
 Web Interface
+
+![Alt text](images/HomePageImage)
 
 Visit:
 http://localhost:8000
@@ -33,40 +40,69 @@ curl -X POST http://localhost:8000/search \
   -H "Content-Type: application/json" \
   -d '{"query": "machine learning", "n_results": 5}'
 
-Testing
-# Run all tests with coverage
+---
+
+## Testing
+### Run all tests with coverage
 uv run pytest
 
-# Run with coverage report
+### Run with coverage report
 uv run pytest --cov=src/retrieval --cov-report=html
 
-# Smoke test only
+### Smoke test only
 uv run pytest tests/test_smoke.py
 
 Code Quality
-# Check formatting
+### Check formatting
 uv run ruff format --check .
 
-# Format code
+### Format code
 uv run ruff format .
 
-# Lint
+### Lint
 uv run ruff check .
 
-Project Structure
-lab3/
-├── src/retrieval/          # Source code
-│   ├── embeddings.py      # Document embedder
-│   ├── loader.py          # Document loader
-│   ├── store.py           # Vector store
-│   ├── retriever.py       # Main retriever
-│   └── main.py             # FastAPI application
-├── tests/                 # Test files
-├── static/                # Web interface
-├── documents/             # Sample documents
-└── pyproject.toml         # Project configuration
+## Project Structure
+```
+P2/
+├── documents/
+│   ├── dracula_by_bram_stoker.txt
+│   ├── sample1.txt
+│   ├── sample2.txt
+│   ├── sample3.txt
+│   └── sample4.txt
+├── images/
+│   └── HomePageImage
+├── pyproject.toml
+├── README.md
+├── src/
+│   └── retrieval/
+│       ├── __init__.py
+│       ├── embeddings.py
+│       ├── loader.py
+│       ├── main.py
+│       ├── retriever.py
+│       └── store.py
+├── static/
+│   ├── index.html
+│   └── style.css
+├── tests/
+│   ├── __init__.py
+│   ├── data/
+│   │   ├── dracula_by_bram_stoker.txt
+│   │   └── MSAI-courses.pdf
+│   ├── test_chunking.py
+│   ├── test_embeddings.py
+│   ├── test_integration.py
+│   ├── test_loader.py
+│   ├── test_retriever.py
+│   ├── test_smoke.py
+│   └── test_store.py
+└── uv.lock
 
-Architecture
+```
+
+## Architecture
 
 Loader: Reads .txt files from documents/
 
